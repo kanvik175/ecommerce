@@ -22,13 +22,14 @@ from django.conf.urls import url
 from django.contrib import admin
 
 from .views import home_page
-from products.views import ProductListView
+from products.views import ProductListView, ProductDetailView
 
 
 urlpatterns = [
     url(r'^$', home_page, name='home'),
     url(r'^admin/', admin.site.urls),
-    url(r'^products/', ProductListView.as_view())
+    url(r'^products/(?P<slug>[\w-]+)/$', ProductDetailView.as_view(), name = 'detail'),
+    url(r'^products/', ProductListView.as_view(), name = 'list')
 ]
 
 if settings.DEBUG:
