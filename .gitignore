@@ -1,5 +1,5 @@
 db.sqlite3
 .DS_Store
 __pycache__
-static_cdn/*
-static/*
+**/static_cdn/**
+**/static/**
