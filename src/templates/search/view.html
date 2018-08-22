@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+
+<!-- Shop -->
+
+<div class="shop">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+
+        <!-- Shop Sidebar -->
+        <div class="shop_sidebar">
+          <div class="sidebar_section">
+            <div class="sidebar_title">Категории</div>
+            <ul class="sidebar_categories">
+              <li><a href="#">Преобразователи интерфейсов</a></li>
+              <li><a href="#">Блок управления двигателем</a></li>
+              <li><a href="#">Инверторы DC/AC</a></li>
+              <li><a href="#">Сварочное оборудование</a></li>
+              <li><a href="#">Электрические инструменты</a></li>
+              <li><a href="#">Измерительные системы</a></li>
+              <li><a href="#">Проомышленная автоматика</a></li>
+            </ul>
+          </div>
+          <div class="sidebar_section filter_by_section">
+            <div class="sidebar_title">Фильтр</div>
+            <div class="sidebar_subtitle">Цена</div>
+            <div class="filter_price">
+              <div id="slider-range" class="slider_range"></div>
+              <p>Диапазон: </p>
+              <p class = "amount">0&#8381; - 77777&#8381;</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="col-lg-9">
+
+        <!-- Shop Content -->
+
+        <div class="shop_content">
+          <div class="shop_bar clearfix">
+            <div class="shop_product_count">По запросу <span>{{ query }}</span> найдено</div>
+            <div class="shop_sorting">
+              <span>Сортировать:</span>
+              <ul>
+                <li>
+                  <span class="sorting_text">по умолчанию<i class="fas fa-chevron-down"></span></i>
+                  <ul>
+                    <li class="shop_sorting_button" data-isotope-option='{ "sortBy": "name" }'>название</li>
+                    <li class="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }'>цена</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="product_grid">
+            <div class="product_grid_border"></div>
+            {% for obj in object_list %}
+            <!-- Product Item -->
+            {% if obj.discount %}
+            <div class="product_item discount {% if obj.new %}is_new{% endif %}">
+              <div class="product_border"></div>
+              {% if obj.image %}
+              <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{{ obj.image.url }}" alt=""></div>
+              {% endif %}
+              <div class="product_content">
+                <div class="product_price">{{ obj.price }}&#8381;<span>5900&#8381;</span></div>
+                <div class="product_name"><div><a href="{{obj.slug}}" tabindex="0">{{ obj.short_title }}</a></div></div>
+              </div>
+              <div class="product_fav"><i class="fas fa-heart"></i></div>
+              <ul class="product_marks">
+                <li class="product_mark product_discount">-{{obj.discount}}%</li>
+                <li class="product_mark product_new">new</li>
+              </ul>
+            </div>
+            {% else %}
+            <div class="product_item {% if obj.new %}is_new{% endif %}">
+              <div class="product_border"></div>
+              {% if obj.image %}
+              <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{{ obj.image.url }}" alt=""></div>
+              {% endif %}
+              <div class="product_content">
+                <div class="product_price">{{ obj.price }}&#8381;</div>
+                <div class="product_name"><div><a href="{{obj.slug}}" tabindex="0">{{ obj.short_title }}</a></div></div>
+              </div>
+              <div class="product_fav"><i class="fas fa-heart"></i></div>
+              <ul class="product_marks">
+                <li class="product_mark product_new">new</li>
+              </ul>
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+
+
+          <!-- Shop Page Navigation -->
+          {% if is_paginated %}
+          <div class="shop_page_nav d-flex flex-row">
+            {% if page_obj.has_previous %}
+              <a href = "?page={{ page_obj.previous_page_number }}"><div class="page_prev d-flex flex-column align-items-center justify-content-center"><i class="fas fa-chevron-left"></i></div></a>
+            {% else %}
+              <div class="page_prev d-flex flex-column align-items-center justify-content-center"><i class="fas fa-chevron-left"></i></div>
+            {% endif %}
+            <ul class="page_nav d-flex flex-row">
+              {% for i in paginator.page_range %}
+                {% if page_obj.number == i %}
+                  <li class = "active">{{i}}</li>
+                {% else %}
+                  <a href="?page={{i}}"><li>{{i}}</li></a>
+                {% endif %}
+              {% endfor %}
+            </ul>
+            {% if page_obj.has_next %}
+              <a href = "?page={{ page_obj.next_page_number }}"><div class="page_prev d-flex flex-column align-items-center justify-content-center"><i class="fas fa-chevron-right"></i></div></a>
+            {% else %}
+              <div class="page_next d-flex flex-column align-items-center justify-content-center"><i class="fas fa-chevron-right"></i></div>
+            {% endif %}
+          </div>
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

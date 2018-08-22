@@ -58,8 +58,8 @@
 						<div class="header_search">
 							<div class="header_search_content">
 								<div class="header_search_form_container">
-									<form action="#" class="header_search_form clearfix">
-										<input type="search" required="required" class="header_search_input" placeholder="Поиск">
+									<form method = "GET" action="{% url "query" %}" class="header_search_form clearfix">
+										<input type="search" name = "q" required="required" class="header_search_input" placeholder="Поиск">
 										<div class="custom_dropdown">
 											<div class="custom_dropdown_list">
 												<span class="custom_dropdown_placeholder clc">Все категории</span>
@@ -124,6 +124,11 @@
 								</div>
 
 								<ul class="cat_menu">
+									{% for category in categories %}
+										{% if category.parent_category is None %}
+											<li><a href="#">{{ category.name }}<i class="fas fa-chevron-right ml-auto"></i></a></li>
+										{% endif %}
+									{% endfor %}
 									<li><a href="#">Преобразователи интерфейсов <i class="fas fa-chevron-right ml-auto"></i></a></li>
 									<li><a href="#">Блок управления двигателем<i class="fas fa-chevron-right"></i></a></li>
 									<li class="hassubs">
@@ -464,13 +469,9 @@
 					<div class="footer_column">
 						<div class="footer_title">Категории</div>
 						<ul class="footer_list">
-							<li><a href="#">Преобразователи интерфейсов</a></li>
-							<li><a href="#">Блок управления двигателем</a></li>
-							<li><a href="#">Инверторы DC/AC</a></li>
-							<li><a href="#">Сварочное оборудование</a></li>
-							<li><a href="#">Электрический инструмент</a></li>
-							<li><a href="#">Измерительные системы</a></li>
-							<li><a href="#">Промышленная автоматика</a></li>
+							{% for category in categories %}
+								<li><a href="#">{{category.name}}</a></li>
+							{% endfor %}
 						</ul>
 					</div>
 				</div>

@@ -1,10 +1,22 @@
 from django.db import models
 
+class Category(models.Model):
+    class Meta:
+        verbose_name_plural = "categories"
+
+    name = models.CharField(max_length = 32)
+    parent_category = models.ForeignKey('self', null = True, blank = True)
+
+
+    def __str__(self):
+        if self.name:
+            return self.name
 
 class Product(models.Model):
     short_title = models.CharField(max_length = 50, null = True)
     title = models.CharField(max_length = 120)
     slug = models.SlugField(blank = True, unique = True, null = True)
+    category = models.ForeignKey(Category, null = True)
     short_description = models.TextField()
     description = models.TextField(blank = True)
     price = models.DecimalField(decimal_places = 0, max_digits = 7, default = 0)

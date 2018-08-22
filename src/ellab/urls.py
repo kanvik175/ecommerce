@@ -23,13 +23,17 @@ from django.contrib import admin
 
 from .views import home_page
 from products.views import ProductListView, ProductDetailView
+from search.views import SearchProductView
+from carts.views import cart_home
 
 
 urlpatterns = [
     url(r'^$', home_page, name='home'),
     url(r'^admin/', admin.site.urls),
     url(r'^products/(?P<slug>[\w-]+)/$', ProductDetailView.as_view(), name = 'detail'),
-    url(r'^products/', ProductListView.as_view(), name = 'list')
+    url(r'^products/', ProductListView.as_view(), name = 'list'),
+    url(r'^search/', SearchProductView.as_view(), name = 'query'),
+    url(r'^cart/', cart_home, name = 'cart')
 ]
 
 if settings.DEBUG:
