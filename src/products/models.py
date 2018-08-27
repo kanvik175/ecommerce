@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 class Category(models.Model):
     class Meta:
@@ -15,7 +16,7 @@ class Category(models.Model):
 class Product(models.Model):
     short_title = models.CharField(max_length = 50, null = True)
     title = models.CharField(max_length = 120)
-    slug = models.SlugField(blank = True, unique = True, null = True)
+    slug = models.SlugField(unique = True, null = True)
     category = models.ForeignKey(Category, null = True)
     short_description = models.TextField()
     description = models.TextField(blank = True)
@@ -28,6 +29,9 @@ class Product(models.Model):
     completeness = models.TextField()
     new = models.BooleanField(default=False)
     discount = models.DecimalField(max_digits = 2, decimal_places = 0, default = 0)
+
+    def get_absolute_url(self):
+        return reverse("detail", kwargs = {"slug" : self.slug})
 
     def __str__(self):
         if self.short_title:

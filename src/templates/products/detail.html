@@ -31,7 +31,8 @@
           <div class="product_name">{{object.title}}</div>
           <div class="product_text"><p>{{object.short_description}}</p></div>
           <div class="order_info d-flex flex-row">
-            <form action="#">
+            	<form method = "POST" action = '{% url "cart:update" %}'> {% csrf_token %}
+                <input type = "hidden" name = "product_id" value = "{{ product.id }}"/>
               <div class="clearfix" style="z-index: 1000;">
 
                 <!-- Product Quantity -->
@@ -47,12 +48,12 @@
               </div>
 
               <div class="product_price">{{object.price}}&#8381;</div>
+
               <div class="button_container">
-                <button type="button" class="button cart_button">Добавить в корзину</button>
-                <div class="product_fav"><i class="fas fa-heart"></i></div>
+                  <button type="submit" class="button cart_button">Добавить в корзину</button>
               </div>
 
-            </form>
+              </form>
           </div>
         </div>
       </div>

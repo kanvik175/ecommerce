@@ -2,6 +2,73 @@
 
 {% block content %}
 
-<h2 class = "text-center">Cart</h2>
+<!-- Cart -->
+{% if cart.products.exists %}
+<div class="cart_section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 offset-lg-1">
+        <div class="cart_container">
+          <div class="cart_title">Корзина</div>
+          <div class="cart_items">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Название</th>
+                <th scope="col">Количество</th>
+                <th scope="col">Цена</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for product in cart.products.all %}
+                <tr>
+                  <th scope="row">{{ forloop.counter }}</th>
+                    <td><a href = "{{product.get_absolute_url}}">{{product.short_title}}</a></td>
+                  <td>1</td>
+                  <td>{{ product.price }}</td>
+                  <td>
+                    <form action = "{% url "cart:update" %}" method = "POST"> {% csrf_token %}
+                    <input type = "hidden" name = "product_id" value = "{{product.id}}" />
+                    <button class = "btn btn-link" type = "submit"><i class="fas fa-times"></i></button>
+                    </form>
+
+                  </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+          <div class="order_total">
+            <div class="order_total_content text-md-right">
+              <div class="order_total_title">Итого:</div>
+              <div class="order_total_amount">{{ cart.total }}&#8381;</div>
+            </div>
+          </div>
+          <div class="cart_buttons">
+            <button type="button" class="button cart_button_checkout">Оформить заказ</button>
+          </div>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% else %}
+<div class="cart_section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 offset-lg-1">
+        <div class="cart_container">
+          <div class="cart_title">Корзина пуста</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
 
 {% endblock %}

@@ -18,22 +18,21 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 
 from .views import home_page
 from products.views import ProductListView, ProductDetailView
 from search.views import SearchProductView
-from carts.views import cart_home
-
+from carts.views import cart_home, cart_update
 
 urlpatterns = [
     url(r'^$', home_page, name='home'),
     url(r'^admin/', admin.site.urls),
-    url(r'^products/(?P<slug>[\w-]+)/$', ProductDetailView.as_view(), name = 'detail'),
+    url(r'^products/(?P<slug>[-\w]+)/$', ProductDetailView.as_view(), name = 'detail'),
     url(r'^products/', ProductListView.as_view(), name = 'list'),
     url(r'^search/', SearchProductView.as_view(), name = 'query'),
-    url(r'^cart/', cart_home, name = 'cart')
+    url(r'^cart/', include("carts.urls", namespace = "cart")),
 ]
 
 if settings.DEBUG:
