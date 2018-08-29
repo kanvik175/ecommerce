@@ -20,11 +20,13 @@ from django.conf.urls.static import static
 
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.contrib.auth.views import LogoutView
 
 from .views import home_page
 from products.views import ProductListView, ProductDetailView
 from search.views import SearchProductView
 from carts.views import cart_home, cart_update
+from accounts.views import login_page, register_page
 
 urlpatterns = [
     url(r'^$', home_page, name='home'),
@@ -33,6 +35,9 @@ urlpatterns = [
     url(r'^products/', ProductListView.as_view(), name = 'list'),
     url(r'^search/', SearchProductView.as_view(), name = 'query'),
     url(r'^cart/', include("carts.urls", namespace = "cart")),
+    url(r'^login/', login_page, name = 'login'),
+    url(r'^logout/', LogoutView.as_view(), name = 'logout'),
+    url(r'^register/', register_page, name = 'register')
 ]
 
 if settings.DEBUG:

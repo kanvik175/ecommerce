@@ -46,7 +46,9 @@
             </div>
           </div>
           <div class="cart_buttons">
-            <button type="button" class="button cart_button_checkout">Оформить заказ</button>
+            <a href = "{% url "cart:checkout" %}">
+              <button type="button" class="button cart_button_checkout">Оформить заказ</button>
+            </a>
           </div>
         </div>
       </div>

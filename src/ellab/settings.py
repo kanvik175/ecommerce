@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'products',
     'search',
-    'carts'
+    'carts',
+    'orders',
+    'accounts'
 ]
 
 MIDDLEWARE = [
@@ -51,6 +53,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+LOGOUT_REDIRECT_URL = "/"
 
 ROOT_URLCONF = 'ellab.urls'
 
