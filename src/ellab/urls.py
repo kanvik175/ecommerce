@@ -26,7 +26,7 @@ from .views import home_page
 from products.views import ProductListView, ProductDetailView
 from search.views import SearchProductView
 from carts.views import cart_home, cart_update
-from accounts.views import login_page, register_page
+from accounts.views import login_page, register_page, guest_register_view
 
 urlpatterns = [
     url(r'^$', home_page, name='home'),
@@ -37,7 +37,8 @@ urlpatterns = [
     url(r'^cart/', include("carts.urls", namespace = "cart")),
     url(r'^login/', login_page, name = 'login'),
     url(r'^logout/', LogoutView.as_view(), name = 'logout'),
-    url(r'^register/', register_page, name = 'register')
+    url(r'^register/', register_page, name = 'register'),
+    url(r'^register/guest', guest_register_view, name = 'guest_register')
 ]
 
 if settings.DEBUG:
